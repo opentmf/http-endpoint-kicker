@@ -130,7 +130,7 @@ docker run --rm \
 |            | `TRIGGER_CONTENT_TYPE`  | No          | application/json   | Sets the Content-Type header (e.g., application/json, application/x-www-form-urlencoded).                                |
 | **Auth**   | `BASIC_AUTH_USERNAME`   | If Basic    |                    | Basic auth username, if basic auth is to be used                                                                         |
 |            | `BASIC_AUTH_PASSWORD`   | If Basic    |                    | Basic auth password, if basic auth is to be used                                                                         |
-| **Bearer** | `TOKEN_SCRIPT_PATH`     | If Bearer   |                    | Path to the getToken script for Bearer auth. Specify /epp/get-token-default.sh or your own script.                       |
+| **Bearer** | `TOKEN_SCRIPT_PATH`     | If Bearer   |                    | Path to the getToken script for Bearer auth. Specify /app/get-token-default.sh or your own script.                       |
 |            | `OIDC_TOKEN_URL`        | If Bearer   |                    | The full URL to obtain an OIDC access token. Example: https://keycloak/auth/realms/xyz/protocol/openid-connect/token     |
 |            | `OIDC_CLIENT_ID`        | If Bearer   |                    | The OIDC client_id                                                                                                       |
 |            | `OIDC_CLIENT_SECRET`    | If Bearer   |                    | The OIDC client_secret                                                                                                   |
