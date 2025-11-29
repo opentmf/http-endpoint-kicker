@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: http-endpoint-kicker-example
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: http-endpoint-kicker
+              image: ghcr.io/opentmf/http-endpoint-kicker:1.0.0
+              env:
+                - name: TRIGGER_URL
+                  value: "https://your-service.namespace.svc.cluster.local/processing/process"
+                - name: TRIGGER_METHOD
+                  value: "POST"
+
+                # Use built-in OIDC token script for Bearer auth
+                - name: TOKEN_SCRIPT_PATH
+                  value: "/app/get-token-default.sh"
+                - name: OIDC_TOKEN_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: http-kicker-oidc-secret
+                      key: token-url
+                - name: OIDC_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: http-kicker-oidc-secret
+                      key: client-id
+                - name: OIDC_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: http-kicker-oidc-secret
+                      key: client-secret
+                - name: OIDC_GRANT_TYPE
+                  value: "client_credentials"
+
+          # You can also add resources, nodeSelector, etc. here as needed.
